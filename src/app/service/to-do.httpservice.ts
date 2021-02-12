@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {from, Observable} from 'rxjs';
 import ToDo from '../model/to-do.model';
+import {logMethod} from '../decorator/log-method.decorator';
 
 @Injectable({
   providedIn: 'root'
@@ -23,6 +24,7 @@ export class ToDoHttpService {
     return from([this.dummyToDos]);
   }
 
+  @logMethod()
   createToDos(payload: ToDo): Observable<ToDo> {
     this.dummyToDos.push(payload);
 
