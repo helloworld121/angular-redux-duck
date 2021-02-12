@@ -43,7 +43,11 @@ export class ToDoComponent implements OnInit, OnDestroy {
   }
 
   createToDo(): void {
-    const todo: ToDo = { title: this.Title, completed: this.IsCompleted };
+    // const todo: ToDo = { title: this.Title, completed: this.IsCompleted };
+    const todo: ToDo = new ToDo(this.Title, this.IsCompleted);
+    console.log('[ToDoComponent]ToDo:', todo);
+    console.log('[ToDoComponent]ToDo.id:', todo.id);
+    console.log('[ToDoComponent]ToDo.created:', todo.created);
     this.store.dispatch(fromToDoAction.BeginCreateToDoAction({ payload: todo }));
     this.Title = '';
     this.IsCompleted = false;

@@ -5,7 +5,7 @@
 //    - target class
 //    - name of the method
 //    - descriptor meta-data => a possible way to gain access
-export function logMethod(): MethodDecorator {
+export function LogMethod(): MethodDecorator {
   return ( target: Object, key: string, descriptor: PropertyDescriptor) => {
 
     // 2) decorator BODY
