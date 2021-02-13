@@ -9,9 +9,15 @@ export const intialState = initializeState();
 const reducer = createReducer(
   intialState,
   on(fromToDoAction.GetToDoAction, state => state),
+
   on(fromToDoAction.CreateToDoAction, (state: ToDoState, todo: ToDo) => {
-    return { ...state, toDos: [...state.toDos, todo], ToDoError: null };
+    return {
+      ...state,
+      toDos: [...state.toDos, todo],
+      ToDoError: null
+    };
   }),
+
   on(fromToDoAction.SuccessGetToDoAction, (state: ToDoState, { payload }) => {
     console.log('[ToDoReducer] SuccessGetToDoAction: ', payload);
     return { ...state, toDos: payload };
