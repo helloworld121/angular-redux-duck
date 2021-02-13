@@ -5,6 +5,8 @@ import { map } from 'rxjs/operators';
 import * as fromToDoAction from '../store/to-do.action';
 import ToDo from '../model/to-do.model';
 import ToDoState from '../store/to-do.state';
+import {ToDoHttpService} from "../service/to-do.httpservice";
+import {ToDoDuckStore} from "../store-ducked/to-do.duck.store";
 
 @Component({
   selector: 'app-to-do',
@@ -24,11 +26,15 @@ export class ToDoComponent implements OnInit, OnDestroy {
 
 
 
-  constructor(private store: Store<{ todos: ToDoState }>) {
+  constructor(
+    private toDoDuckStore: ToDoDuckStore,
+    private store: Store<{ todos: ToDoState }>) {
     this.todo$ = store.pipe(select('todos'));
   }
 
   ngOnInit(): void {
+    console.log('[ToDoComponent].ToDoDuckStore', this.toDoDuckStore);
+
     this.ToDoSubscription = this.todo$
       .pipe(
         map(x => {
@@ -46,8 +52,9 @@ export class ToDoComponent implements OnInit, OnDestroy {
     // const todo: ToDo = { title: this.Title, completed: this.IsCompleted };
     const todo: ToDo = new ToDo(this.Title, this.IsCompleted);
     console.log('[ToDoComponent]ToDo:', todo);
-    console.log('[ToDoComponent]ToDo.id:', todo.id);
-    console.log('[ToDoComponent]ToDo.created:', todo.created);
+    // the Decorator add these fields, but compiler doesn't recognize
+    // console.log('[ToDoComponent]ToDo.id:', todo.id);
+    // console.log('[ToDoComponent]ToDo.created:', todo.created);
     this.store.dispatch(fromToDoAction.BeginCreateToDoAction({ payload: todo }));
     this.Title = '';
     this.IsCompleted = false;
