@@ -6,7 +6,7 @@ import * as fromToDoAction from '../store/to-do.action';
 import ToDo from '../model/to-do.model';
 import ToDoState from '../store/to-do.state';
 import {ToDoHttpService} from "../service/to-do.httpservice";
-import {ToDoDuckStore} from "../store-ducked/to-do.duck.store";
+import {CounterDuckStore} from "../store-ducked/counter-duck.store";
 
 @Component({
   selector: 'app-to-do',
@@ -27,13 +27,15 @@ export class ToDoComponent implements OnInit, OnDestroy {
 
 
   constructor(
-    private toDoDuckStore: ToDoDuckStore,
+    private counterDuckStore: CounterDuckStore,
     private store: Store<{ todos: ToDoState }>) {
     this.todo$ = store.pipe(select('todos'));
   }
 
   ngOnInit(): void {
-    console.log('[ToDoComponent].ToDoDuckStore', this.toDoDuckStore);
+    console.log('[ToDoComponent].CounterDuckStore', this.counterDuckStore);
+    // @ts-ignore
+    this.counterDuckStore.updateCounterAction(11);
 
     this.ToDoSubscription = this.todo$
       .pipe(

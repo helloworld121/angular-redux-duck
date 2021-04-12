@@ -1,5 +1,6 @@
 import {ɵɵdefineInjectable, ɵɵinject} from '@angular/core';
 import {Store} from '@ngrx/store';
+import {log} from "util";
 
 export function Duck<STATE_TYPE>(initialState: STATE_TYPE): ClassDecorator {
   return (constructor) => {
@@ -38,5 +39,28 @@ export function Duck<STATE_TYPE>(initialState: STATE_TYPE): ClassDecorator {
 const duckFactory = (constructor) => {
   const store = ɵɵinject(Store);
   console.log('[Duck] duckFactory', store);
-  return new constructor();
+
+  // store.select((state) => console.log('store.select: ', state));
+
+  // TODO 1) find all annotated methods (@DuckPair)
+  // TODO 2) build method
+
+  // interface Action consists out of => type:string; payload?:and
+  //    => https://angular-2-training-book.rangle.io/state-management/ngrx/actions
+  // to dispatch an action we call store.dispatch
+  const myMethodNameFromClass = (payload) => {
+    store.dispatch({type: 'My-Action', payload});
+    console.log('[Duck] myMethodNameFromClass: ', payload);
+  };
+
+
+  // build object with
+
+  const instance = new constructor();
+
+  return {
+    ...instance,
+    updateCounterAction: myMethodNameFromClass
+  };
+
 };
